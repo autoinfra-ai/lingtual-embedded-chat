@@ -87,35 +87,38 @@ export default function ChatWindow({
       setSendingMessage(true);
       setValue("");
       sendMessage(hostUrl, flowId, value, chat_inputs, chat_input_field, tweaks)
-        .then((res) => {
-          if (
-            res.data &&
-            res.data.result &&
-            Object.keys(res.data.result).length > 0
-          ) {
-            if (chat_output_key &&
-            res.data.result[chat_output_key]) {
-              updateLastMessage({
-                message: res.data.result[chat_output_key],
-                isSend: false,
-              });
-            } else if (
-              Object.keys(res.data.result).length === 1
-            ) {
-              updateLastMessage({
-                message: Object.values(res.data.result)[0],
-                isSend: false,
-              });
-            } else {
-              updateLastMessage({
-                message: "Multiple output keys were detected in the response. Please, define the output key to specify the intended response.",
-                isSend: false,
-                error: true,
-              });
-            }
+      .then((res) => {
+        if (
+          res.data &&
+          res.data.result
+        ) {
+          const resultKeys = Object.keys(res.data.result);
+          if (chat_output_key && res.data.result[chat_output_key]) {
+            updateLastMessage({
+              message: res.data.result[chat_output_key],
+              isSend: false,
+            });
+          } else if (resultKeys.length === 1) {
+            updateLastMessage({
+              message: Object.values(res.data.result)[0],
+              isSend: false,
+            });
+          } else if (resultKeys.includes('output')) {
+            updateLastMessage({
+              message: res.data.result['output'],
+              isSend: false,
+            });
+          } else {
+            updateLastMessage({
+              message: `Multiple output keys were detected in the response: ${resultKeys.join(', ')}. Please, define the output key to specify the intended response.`,
+              isSend: false,
+              error: true,
+            });
           }
-          setSendingMessage(false);
-        })
+        }
+        setSendingMessage(false);
+      })
+      
         .catch((err) => {
           const response = err.response;
           if (err.code === "ERR_NETWORK") {
