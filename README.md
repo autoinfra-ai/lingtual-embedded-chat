@@ -2,6 +2,12 @@
 
 Welcome to the Lingtual Embedded Chat repository! 🎉
 
+### BE CAREFUL
+
+we use https://cdn.jsdelivr.net/gh/autoinfra-ai/lingtual-embedded-chat@latest/dist/build/static/js/bundle.min.js in our production code
+
+this means we will get the latest branch out of ANY branch. Only work off main, and only push when you are ready for prod
+
 ## What is Lingtual?
 
 Lingtual is a no-code open-source project that empowers developers to build cutting-edge applications using Language Model technologies. With Lingtual, you can leverage the power of LLMs (Large Language Models) to enhance user interactions, generate human-like text, and gain valuable insights from natural language data.
