@@ -1,7 +1,6 @@
 # Lingtual Embedded Chat ⛓️
-
-Welcome to the Lingtual Embedded Chat repository! 🎉
-
+**Forked from https://github.com/logspace-ai/langflow 
+**
 ### BE CAREFUL
 
 we use https://cdn.jsdelivr.net/gh/autoinfra-ai/lingtual-embedded-chat@latest/dist/build/static/js/bundle.min.js in our production code
