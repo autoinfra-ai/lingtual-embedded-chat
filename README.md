@@ -22,41 +22,6 @@ Lingtual is a no-code open-source project that empowers developers to build cutt
 
 🌐 Multilingual Support: Communicate with users in multiple languages, opening up your application to a global audience.
 
-## Installation
-
-### Option 1: CDN Link
-
-Use the Lingtual Widget directly from the CDN by including the following script tag in your HTML:
-
-```html
-<script src="https://cdn.jsdelivr.net/gh/autoinfra-ai/lingtual-embedded-chat@main/dist/build/static/js/bundle.min.js"></script>
-```
-
-### Option 2: Local Build
-
-1. Clone this repository to your local machine:
-
-```bash
-git clone https://github.com/autoinfra-ai/lingtual-embedded-chat.git
-```
-
-2. Navigate to the project directory:
-
-```bash
-cd lingtual-embedded-chat
-```
-
-3. Build the project to generate the bundle:
-
-```bash
-npm run build
-```
-
-5. After the build process completes, you'll find the bundle in the `dist/build/static/js` folder. You can include this JavaScript file in your HTML:
-
-```html
-<script src="path/to/your/lingtual-widget.js"></script>
-```
 
 ## Usage
 
@@ -244,3 +209,7 @@ Use the widget API to customize your widget:
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT) - see the [LICENSE](https://github.com/autoinfra-ai/lingtual-embedded-chat/tree/main/LICENSE) file for details.
+
+This is a fork of https://github.com/logspace-ai/langflow-embedded-chat credit to them and flowise for building these similar chat components with MIT! 
+
+https://github.com/FlowiseAI/FlowiseChatEmbed
