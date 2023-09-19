@@ -66,6 +66,7 @@ export default function ChatWindow({
 }) {
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null)
   const lastMessage = useRef<HTMLDivElement>(null);
   const [windowPosition, setWindowPosition] = useState({ left: "0", top: "0" });
   useEffect(() => {
@@ -149,6 +150,7 @@ export default function ChatWindow({
   useEffect(() => {
     if (lastMessage.current)
       lastMessage.current.scrollIntoView({ behavior: "smooth" });
+    inputRef.current?.focus()
   }, [messages]);
 
   return (
@@ -197,6 +199,7 @@ export default function ChatWindow({
         </div>
         <div style={input_container_style} className="cl-input_container">
           <input
+            ref={inputRef}
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onKeyDown={(e) => {
