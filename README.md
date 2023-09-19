@@ -1,4 +1,4 @@
-# Lingtual Embedded Chat ⛓️
+<img width="336" alt="Screenshot 2023-09-18 at 7 17 28 PM" src="https://github.com/autoinfra-ai/lingtual-embedded-chat/assets/26863466/e612721d-b94a-462c-8e69-fedb9c392cac"># Lingtual Embedded Chat ⛓️
 **Forked from https://github.com/logspace-ai/langflow 
 **
 ### BE CAREFUL
@@ -20,6 +20,7 @@ Lingtual is a no-code open-source project that empowers developers to build cutt
 🎛️ Customizable Styling: Customize the appearance of the chat widget to match your application's design and branding.
 
 🌐 Multilingual Support: Communicate with users in multiple languages, opening up your application to a global audience.
+<img width="680" alt="Screenshot 2023-09-18 at 7 17 46 PM" src="https://github.com/autoinfra-ai/lingtual-embedded-chat/assets/26863466/8ab24779-8881-40b5-ba87-7e51946d63c5">
 
 
 ## Usage
