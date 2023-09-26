@@ -1,4 +1,4 @@
-import { Send } from "lucide-react";
+import { MessageSquare, Send } from "lucide-react";
 import { getAnimationOrigin, getChatPosition } from "../utils";
 import React, { useEffect, useRef, useState } from "react";
 import { ChatMessageType } from "../../types/chatWidget";
@@ -66,7 +66,7 @@ export default function ChatWindow({
 }) {
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null);
   const lastMessage = useRef<HTMLDivElement>(null);
   const [windowPosition, setWindowPosition] = useState({ left: "0", top: "0" });
   useEffect(() => {
@@ -81,6 +81,22 @@ export default function ChatWindow({
       );
   }, [triggerRef, width, height, position]);
   const [sendingMessage, setSendingMessage] = useState(false);
+  const [suggestionClicked, setSuggestionClicked] = useState(false);
+
+  const suggestions = [
+    {
+      questionId: 1,
+      text: "Suggested questions here...",
+    },
+    {
+      questionId: 2,
+      text: "Question 2",
+    },
+    {
+      questionId: 3,
+      text: "How to connect with Google Calendar?",
+    },
+  ];
 
   function handleClick() {
     if (value && value.trim() !== "") {
@@ -88,38 +104,35 @@ export default function ChatWindow({
       setSendingMessage(true);
       setValue("");
       sendMessage(hostUrl, flowId, value, chat_inputs, chat_input_field, tweaks)
-      .then((res) => {
-        if (
-          res.data &&
-          res.data.result
-        ) {
-          const resultKeys = Object.keys(res.data.result);
-          if (chat_output_key && res.data.result[chat_output_key]) {
-            updateLastMessage({
-              message: res.data.result[chat_output_key],
-              isSend: false,
-            });
-          } else if (resultKeys.length === 1) {
-            updateLastMessage({
-              message: Object.values(res.data.result)[0],
-              isSend: false,
-            });
-          } else if (resultKeys.includes('output')) {
-            updateLastMessage({
-              message: res.data.result['output'],
-              isSend: false,
-            });
-          } else {
-            updateLastMessage({
-              message: `Multiple output keys were detected in the response: ${resultKeys.join(', ')}. Please, define the output key to specify the intended response.`,
-              isSend: false,
-              error: true,
-            });
+        .then((res) => {
+          if (res.data && res.data.result) {
+            const resultKeys = Object.keys(res.data.result);
+            if (chat_output_key && res.data.result[chat_output_key]) {
+              updateLastMessage({
+                message: res.data.result[chat_output_key],
+                isSend: false,
+              });
+            } else if (resultKeys.length === 1) {
+              updateLastMessage({
+                message: Object.values(res.data.result)[0],
+                isSend: false,
+              });
+            } else if (resultKeys.includes("output")) {
+              updateLastMessage({
+                message: res.data.result["output"],
+                isSend: false,
+              });
+            } else {
+              updateLastMessage({
+                message: `Multiple output keys were detected in the response: ${resultKeys.join(", ")}. Please, define the output key to specify the intended response.`,
+                isSend: false,
+                error: true,
+              });
+            }
           }
-        }
-        setSendingMessage(false);
-      })
-      
+          setSendingMessage(false);
+        })
+
         .catch((err) => {
           const response = err.response;
           if (err.code === "ERR_NETWORK") {
@@ -147,10 +160,20 @@ export default function ChatWindow({
     }
   }
 
+  function suggestionHandle(QuestionId: number) {
+    setValue(suggestions[QuestionId - 1].text);
+    setSuggestionClicked(true);
+  }
+
+  useEffect(() => {
+    handleClick();
+    suggestionClicked && setSuggestionClicked(false);
+  }, [suggestionClicked]);
+
   useEffect(() => {
     if (lastMessage.current)
       lastMessage.current.scrollIntoView({ behavior: "smooth" });
-    inputRef.current?.focus()
+    inputRef.current?.focus();
   }, [messages]);
 
   return (
@@ -168,7 +191,10 @@ export default function ChatWindow({
         className="cl-window"
       >
         <div className="cl-header">
-          {window_title}
+          <div className="cl-header-title">
+            <MessageSquare />
+            {window_title}
+          </div>
           <div className="cl-header-subtitle">
             {online ? (
               <>
@@ -197,35 +223,56 @@ export default function ChatWindow({
           ))}
           <div ref={lastMessage}></div>
         </div>
-        <div style={input_container_style} className="cl-input_container">
-          <input
-            ref={inputRef}
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleClick();
-            }}
-            type="text"
-            disabled={sendingMessage}
-            placeholder={sendingMessage ? (placeholder_sending || "Thinking...") : (placeholder || "Type your message...")}
-            style={input_style}
-            className="cl-input-element"
-          />
-          <button
-            style={send_button_style}
-            disabled={sendingMessage}
-            onClick={handleClick}
-          >
-            <Send
-              style={send_icon_style}
-              className={
-                "cl-send-icon " +
-                (!sendingMessage
-                  ? "cl-notsending-message"
-                  : "cl-sending-message")
+        <div className="cl-suggestions_container">
+          {suggestions.map((suggestion, index) => (
+            <button
+              className="cl-suggestion"
+              onClick={() => suggestionHandle(suggestion.questionId)}
+              key={suggestion.questionId}
+            >
+              {suggestion.text}
+            </button>
+          ))}
+        </div>
+        <div className="cl-input_container_wrapper">
+          <div style={input_container_style} className="cl-input_container">
+            <input
+              ref={inputRef}
+              value={value}
+              onChange={(e) => setValue(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleClick();
+              }}
+              type="text"
+              disabled={sendingMessage}
+              placeholder={
+                sendingMessage
+                  ? placeholder_sending || "Thinking..."
+                  : placeholder || "Type your message..."
               }
+              style={input_style}
+              className="cl-input-element"
             />
-          </button>
+            <button
+              style={send_button_style}
+              disabled={sendingMessage}
+              className="cl-send-button"
+              onClick={handleClick}
+            >
+              <Send
+                style={send_icon_style}
+                className={
+                  "cl-send-icon " +
+                  (!sendingMessage
+                    ? "cl-notsending-message"
+                    : "cl-sending-message")
+                }
+              />
+            </button>
+          </div>
+        </div>
+        <div className="cl-powered-by">
+          Powered by <span className="cl-powered-by-lingtual">lingtual</span>
         </div>
       </div>
     </div>
