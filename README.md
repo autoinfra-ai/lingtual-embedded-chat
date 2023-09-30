@@ -8,6 +8,9 @@ we use https://cdn.jsdelivr.net/gh/autoinfra-ai/lingtual-embedded-chat@latest/di
 this means we will get the latest branch out of ANY branch. 
 Only push your npm run build output if you want it to go to prod
 
+to purge jsdelivr cache: click this
+https://purge.jsdelivr.net/npm/lingtual-embedded-chat@latest
+
 ## What is Lingtual?
 
 Lingtual is a no-code open-source project that empowers developers to build cutting-edge applications using Language Model technologies. With Lingtual, you can leverage the power of LLMs (Large Language Models) to enhance user interactions, generate human-like text, and gain valuable insights from natural language data.
