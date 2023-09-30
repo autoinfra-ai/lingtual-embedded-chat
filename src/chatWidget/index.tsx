@@ -672,7 +672,7 @@ video {
   border-radius: 1rem;
   --tw-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   --tw-shadow-colored: 0 0 10px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  box-shadow: 0px 4px 16px 0px #0000001F;
 }
 
 .cl-scale-100 {
@@ -724,18 +724,21 @@ video {
   background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
+.cl-send-button {
+  border-radius: 5rem;
+  background: linear-gradient(260.59deg, #834DF3 0%, #2F69FE 100%);
+  height: 40px;
+  width: 40px;
+  padding: 0.5rem;
+}
+
 .cl-send-icon {
-  margin-right: 1.25rem;
-  height: 1.5rem;
-  width: 1.5rem;
+  padding-right: 0.1rem;
+  padding-top: 0.1rem;
 }
 
 .cl-notsending-message {
-  stroke: #3b82f6;
-}
-
-.cl-notsending-message:hover {
-  stroke: #60a5fa;
+  stroke: #fff;
 }
 
 .cl-sending-message {
@@ -757,7 +760,7 @@ video {
   display: flex;
   flex-direction: column;
   --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  background-color: rgb(248 250 252 / var(--tw-bg-opacity));
   padding-top: 1rem;
   padding-bottom: 1rem;
   padding-left: 1.5rem;
@@ -766,9 +769,13 @@ video {
   line-height: 1.75rem;
   font-weight: 400;
   color: rgb(17 24 39);
-  --tw-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  --tw-shadow-colored: 0 0 10px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  border-bottom: 1px solid rgb(229 231 235);
+}
+
+.cl-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .cl-messages_container {
@@ -780,7 +787,7 @@ video {
   overflow: scroll;
   overflow-x: clip;
   --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.5rem;
@@ -793,15 +800,56 @@ video {
   display: none;
 }
 
-.cl-input_container {
+.cl-suggestions_container {
   display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
   width: 100%;
+  padding: 16px 24px;
+  padding-bottom: 0;
+}
+
+.cl-suggestion {
+  height: 2.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 2.5rem;
+  border: 1px solid rgb(229 231 235);
+  color: #2F69FE;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.cl-input_container_wrapper {
+  padding: 16px 24px;
+}
+
+.cl-input_container {
+  padding: 8px;
+  padding-left: 20px;
+  display: flex;
   align-items: center;
-  border-top-width: 1px;
+  border-radius: 5rem;
+  border-width: 1px;
   --tw-border-opacity: 1;
   border-color: rgb(229 231 235 / var(--tw-border-opacity));
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+  box-shadow: 0px 2px 5px 0px #0000000D;
+}
+
+.cl-powered-by {
+  color: rgb(107 114 128);
+  text-align: center;
+  font-size: 0.75rem;
+  padding: 0.4rem;
+  font-style: italic;
+  --tw-bg-opacity: 1;
+  background-color: rgb(248 250 252 / var(--tw-bg-opacity));
+}
+
+.cl-powered-by-lingtual {
+  font-style: normal;
+  font-weight: 600;
 }
 
 .cl-chat-message {
@@ -839,12 +887,9 @@ video {
 }
 
 .cl-input-element {
-  height: 100%;
+  height: 40px;
   width: 100%;
-  padding-left: 1.25rem;
   padding-right: 1.25rem;
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
   font-weight: 300;
   background-color: rgb(255 255 255);
   color: rgb(17 24 39);
