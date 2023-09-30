@@ -24,6 +24,7 @@ export default function ChatWindow({
   online_message = "We'll reply as soon as we can",
   offline_message = "We're offline now",
   window_title = "Chat",
+  api_key,
   placeholder,
   chat_output_key,
   input_style,
@@ -50,6 +51,7 @@ export default function ChatWindow({
   offline_message?: string;
   chat_output_key?: string;
   window_title?: string;
+  api_key: string;
   placeholder?: string;
   input_style?: React.CSSProperties;
   input_container_style?: React.CSSProperties;
@@ -103,7 +105,7 @@ export default function ChatWindow({
       addMessage({ message: value, isSend: true });
       setSendingMessage(true);
       setValue("");
-      sendMessage(hostUrl, flowId, value, chat_inputs, chat_input_field, tweaks)
+      sendMessage(hostUrl, flowId, api_key, value, chat_inputs, chat_input_field, tweaks)
         .then((res) => {
           if (res.data && res.data.result) {
             const resultKeys = Object.keys(res.data.result);
