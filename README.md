@@ -9,7 +9,7 @@ this means we will get the latest branch out of ANY branch.
 Only push your npm run build output if you want it to go to prod
 
 to purge jsdelivr cache: click this
-https://purge.jsdelivr.net/npm/lingtual-embedded-chat@latest
+https://www.jsdelivr.com/tools/purge and enter https://cdn.jsdelivr.net/gh/autoinfra-ai/lingtual-embedded-chat@latest/dist/build/static/js/bundle.min.js
 
 ## What is Lingtual?
 
