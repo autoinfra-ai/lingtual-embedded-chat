@@ -24,6 +24,7 @@ export default function ChatWindow({
   online_message = "We'll reply as soon as we can",
   offline_message = "We're offline now",
   window_title = "Chat",
+  api_key,
   placeholder,
   chat_output_key,
   input_style,
@@ -50,6 +51,7 @@ export default function ChatWindow({
   offline_message?: string;
   chat_output_key?: string;
   window_title?: string;
+  api_key: string;
   placeholder?: string;
   input_style?: React.CSSProperties;
   input_container_style?: React.CSSProperties;
@@ -86,7 +88,7 @@ export default function ChatWindow({
       addMessage({ message: value, isSend: true });
       setSendingMessage(true);
       setValue("");
-      sendMessage(hostUrl, flowId, value, chat_inputs, chat_input_field, tweaks)
+      sendMessage(hostUrl, flowId, api_key, value, chat_inputs, chat_input_field, tweaks)
       .then((res) => {
         if (
           res.data &&
@@ -110,7 +112,7 @@ export default function ChatWindow({
             });
           } else {
             updateLastMessage({
-              message: `Multiple output keys were detected in the response: ${resultKeys.join(', ')}. Please, define the output key to specify the intended response.`,
+              message: `Contact support@lingtual.com: Multiple output keys were detected in the response: ${resultKeys.join(', ')}. Please, define the output key to specify the intended response.`,
               isSend: false,
               error: true,
             });

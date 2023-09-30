@@ -12,6 +12,7 @@ customElements.define('lingtual-chat', r2wc(ChatWidget, {
         online: "boolean",
         online_message: "string",
         window_title: "string",
+        api_key: "string",
         tweaks:"json",
         bot_message_style:"json",
         user_message_style:"json",
