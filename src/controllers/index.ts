@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export async function sendMessage(baseUrl: string, flowId: string, api_key:string, message: string,inputs: any,input_field:string, tweaks?: Object,) {
+export async function sendMessage(baseUrl: string, flowId: string, api_key: string, message: string, inputs: any, input_field:string, tweaks?: Object,) {
     let data;
     inputs[input_field] = message;
     if (tweaks) {
