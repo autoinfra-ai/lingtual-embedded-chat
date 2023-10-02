@@ -3,11 +3,6 @@
 **
 ### BE CAREFUL
 
-we use https://cdn.jsdelivr.net/gh/autoinfra-ai/lingtual-embedded-chat@latest/dist/build/static/js/bundle.min.js in our production code
-
-this means we will get the latest branch out of ANY branch. 
-Only push your npm run build output if you want it to go to prod
-
 to purge jsdelivr cache: click this
 https://www.jsdelivr.com/tools/purge and enter https://cdn.jsdelivr.net/gh/autoinfra-ai/lingtual-embedded-chat@latest/dist/build/static/js/bundle.min.js
 
