@@ -1,13 +1,10 @@
 import { MessageSquare, Send } from "lucide-react";
 import { getAnimationOrigin, getChatPosition } from "../utils";
 import React, { useEffect, useRef, useState } from "react";
-import { ChatMessageType } from "../../types/chatWidget";
+import { ChatMessageType, suggestion } from "../../types/chatWidget";
 import ChatMessage from "./chatMessage";
 import { sendMessage } from "../../controllers";
-type suggestion = {
-  questionId: number,
-  text: string,
-}
+
 export default function ChatWindow({
   flowId,
   hostUrl,
