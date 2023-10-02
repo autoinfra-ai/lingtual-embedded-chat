@@ -4,7 +4,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { ChatMessageType } from "../../types/chatWidget";
 import ChatMessage from "./chatMessage";
 import { sendMessage } from "../../controllers";
-
+type suggestion = {
+  questionId: number,
+  text: string,
+}
 export default function ChatWindow({
   flowId,
   hostUrl,
@@ -35,6 +38,7 @@ export default function ChatWindow({
   width = 450,
   height = 650,
   tweaks,
+  suggested_questions,
 }: {
   chat_inputs: Object;
   chat_input_field: string;
@@ -65,6 +69,7 @@ export default function ChatWindow({
   triggerRef: React.RefObject<HTMLButtonElement>;
   width?: number;
   height?: number;
+  suggested_questions: suggestion[];
 }) {
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLDivElement>(null);
@@ -84,28 +89,23 @@ export default function ChatWindow({
   }, [triggerRef, width, height, position]);
   const [sendingMessage, setSendingMessage] = useState(false);
   const [suggestionClicked, setSuggestionClicked] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(true);
 
-  const suggestions = [
-    {
-      questionId: 1,
-      text: "Suggested questions here...",
-    },
-    {
-      questionId: 2,
-      text: "Question 2",
-    },
-    {
-      questionId: 3,
-      text: "How to connect with Google Calendar?",
-    },
-  ];
-
+  
   function handleClick() {
     if (value && value.trim() !== "") {
       addMessage({ message: value, isSend: true });
       setSendingMessage(true);
       setValue("");
-      sendMessage(hostUrl, flowId, api_key, value, chat_inputs, chat_input_field, tweaks)
+      sendMessage(
+        hostUrl,
+        flowId,
+        api_key,
+        value,
+        chat_inputs,
+        chat_input_field,
+        tweaks
+      )
         .then((res) => {
           if (res.data && res.data.result) {
             const resultKeys = Object.keys(res.data.result);
@@ -126,12 +126,15 @@ export default function ChatWindow({
               });
             } else {
               updateLastMessage({
-                message: `Multiple output keys were detected in the response: ${resultKeys.join(", ")}. Please, define the output key to specify the intended response.`,
+                message: `Multiple output keys were detected in the response: ${resultKeys.join(
+                  ", "
+                )}. Please, define the output key to specify the intended response.`,
                 isSend: false,
                 error: true,
               });
             }
           }
+
           setSendingMessage(false);
         })
 
@@ -163,8 +166,9 @@ export default function ChatWindow({
   }
 
   function suggestionHandle(QuestionId: number) {
-    setValue(suggestions[QuestionId - 1].text);
+    setValue(suggested_questions[QuestionId - 1].text);
     setSuggestionClicked(true);
+    setShowSuggestions(false);
   }
 
   useEffect(() => {
@@ -177,6 +181,12 @@ export default function ChatWindow({
       lastMessage.current.scrollIntoView({ behavior: "smooth" });
     inputRef.current?.focus();
   }, [messages]);
+
+  useEffect(() => {
+    if (open && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [open]);
 
   return (
     <div
@@ -226,22 +236,26 @@ export default function ChatWindow({
           <div ref={lastMessage}></div>
         </div>
         <div className="cl-suggestions_container">
-          {suggestions.map((suggestion, index) => (
-            <button
-              className="cl-suggestion"
-              onClick={() => suggestionHandle(suggestion.questionId)}
-              key={suggestion.questionId}
-            >
-              {suggestion.text}
-            </button>
-          ))}
+          {showSuggestions &&
+            messages?.length === 0 &&
+            suggested_questions.map((suggestion, index) => (
+              <button
+                className="cl-suggestion"
+                onClick={() => suggestionHandle(suggestion.questionId)}
+                key={suggestion.questionId}
+              >
+                {suggestion.text}
+              </button>
+            ))}
         </div>
         <div className="cl-input_container_wrapper">
           <div style={input_container_style} className="cl-input_container">
             <input
               ref={inputRef}
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(e) => {
+                setValue(e.target.value);
+              }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") handleClick();
               }}

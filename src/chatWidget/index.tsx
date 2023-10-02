@@ -2,7 +2,10 @@ import { useRef, useState } from "react";
 import ChatTrigger from "./chatTrigger";
 import ChatWindow from "./chatWindow";
 import { ChatMessageType } from "../types/chatWidget";
-
+type suggestion = {
+  questionId: number,
+  text: string,
+}
 export default function ChatWidget({
   chat_input_field,
   chat_inputs,
@@ -29,6 +32,7 @@ export default function ChatWidget({
   input_style,
   placeholder_sending,
   input_container_style,
+  suggested_questions,
 }: {
   chat_inputs: Object;
   chat_input_field: string;
@@ -55,6 +59,7 @@ export default function ChatWidget({
   host_url: string;
   flow_id: string;
   tweaks?: { [key: string]: any };
+  suggested_questions: suggestion[];
 }) {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessageType[]>([]);
@@ -807,6 +812,8 @@ video {
   width: 100%;
   padding: 16px 24px;
   padding-bottom: 0;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+
 }
 
 .cl-suggestion {
@@ -821,6 +828,7 @@ video {
 
 .cl-input_container_wrapper {
   padding: 16px 24px;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .cl-input_container {
@@ -1052,6 +1060,7 @@ input::-ms-input-placeholder { /* Microsoft Edge */
         messages={messages}
         triggerRef={triggerRef}
         position={chat_position}
+        suggested_questions={suggested_questions}
       />
     </>
   );
