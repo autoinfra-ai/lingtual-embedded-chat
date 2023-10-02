@@ -1,0 +1,61 @@
+name: Build and Commit
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/**'  # This ensures the action only runs when there are changes in the 'src/' folder
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the code
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: main
+          fetch-depth: 0  # Important: This will fetch all history for all branches and tags.
+
+      # Setup Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'  # adjust version as needed
+
+      # Cache dependencies (optional)
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-node-
+
+      # Install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # Build the project
+      - name: Build
+        run: npm run build
+
+      # Check for changes in the build output (replace "dist/" with your build directory if different)
+      - name: Check for changes
+        id: changes
+        run: |
+          git diff --exit-code dist/ || echo "changes=yes" >> $GITHUB_ENV
+        continue-on-error: true
+
+      # Commit and push changes
+      - name: Commit and Push
+        if: env.changes == 'yes'
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions@example.com"
+          git add -A
+          git commit -m "Automated build commit"
+          git pull --rebase
+          git push
