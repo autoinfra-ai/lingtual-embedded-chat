@@ -28,5 +28,6 @@ customElements.define('lingtual-chat', r2wc(ChatWidget, {
         input_style:"json",
         input_container_style:"json",
         chat_position:"string",
+        suggested_questions:"json",
     },
 }));
