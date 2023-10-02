@@ -9,7 +9,7 @@ export function getChatPosition(
 		return { top: "0px", left: "0px" }; // Return empty string if trigger position is not available
 	}
 
-	const { top, left, width, height } = triggerPosition;
+	const { top, left, width, height } = triggerPosition; // eslint-disable-line
 
 	const distance = 5; // Adjust this value to set the desired distance from the trigger
 	if(!position) return { top: - distance - Cheight + "px", left: -Cwidth + "px" };
