@@ -1,7 +1,4 @@
-<img width="336" alt="Screenshot 2023-09-18 at 7 17 28 PM" src="https://github.com/autoinfra-ai/lingtual-embedded-chat/assets/26863466/e612721d-b94a-462c-8e69-fedb9c392cac"># Lingtual Embedded Chat ⛓️
-**Forked from https://github.com/logspace-ai/langflow 
-**
-### BE CAREFUL
+
 
 to purge jsdelivr cache: click this
 https://www.jsdelivr.com/tools/purge and enter https://cdn.jsdelivr.net/gh/autoinfra-ai/lingtual-embedded-chat@latest/dist/build/static/js/bundle.min.js
