@@ -171,6 +171,7 @@ export default function ChatWindow({
   useEffect(() => {
     handleClick();
     suggestionClicked && setSuggestionClicked(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [suggestionClicked]);
 
   useEffect(() => {
