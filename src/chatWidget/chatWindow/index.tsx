@@ -285,7 +285,7 @@ export default function ChatWindow({
           </div>
         </div>
         <div className="cl-powered-by">
-          Powered by <span className="cl-powered-by-lingtual">lingtual</span>
+        Powered by <span className="cl-powered-by-lingtual"><a href="https://lingtual.com">lingtual</a></span>
         </div>
       </div>
     </div>
