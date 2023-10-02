@@ -7,3 +7,7 @@ export type ChatMessageType = {
     error_message_style?: React.CSSProperties;
   };
   
+ export type suggestion = {
+    questionId: number,
+    text: string,
+  }
