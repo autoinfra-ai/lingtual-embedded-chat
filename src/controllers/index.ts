@@ -9,6 +9,6 @@ export async function sendMessage(baseUrl: string, flowId: string, api_key: stri
     else {
         data = { inputs: inputs };
     }
-    let response = axios.post(`${baseUrl}/api/v1/process/${flowId}`, data, {headers:{"Content-Type": "application/json", "x-api-key": api_key}});
+    let response = await axios.post(`${baseUrl}/api/v1/process/${flowId}`, data, {headers:{"Content-Type": "application/json", "x-api-key": api_key}});
     return response;
 }
