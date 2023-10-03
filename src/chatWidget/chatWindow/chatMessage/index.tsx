@@ -1,5 +1,4 @@
 import { ChatMessageType } from "../../../types/chatWidget";
-import { MoreHorizontal } from "lucide-react";
 
 const dotStyle = {
   width: '6px',
@@ -21,7 +20,7 @@ export default function ChatMessage({
   return (
     <div
       className={
-        "cl-chat-message " + (isSend ? " cl-justify-end" : " cl-justify-start")
+        "cl-chat-message cl-break-words " + (isSend ? " cl-justify-end" : " cl-justify-start")
       }
     >
       {isSend ? (

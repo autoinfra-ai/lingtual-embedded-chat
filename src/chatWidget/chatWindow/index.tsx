@@ -88,7 +88,6 @@ export default function ChatWindow({
   const [suggestionClicked, setSuggestionClicked] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
 
-  
   function handleClick() {
     if (value && value.trim() !== "") {
       addMessage({ message: value, isSend: true });
@@ -233,10 +232,10 @@ export default function ChatWindow({
           ))}
           <div ref={lastMessage}></div>
         </div>
-        <div className="cl-suggestions_container">
-          {showSuggestions &&
-            messages?.length === 0 &&
-            suggested_questions.map((suggestion, index) => (
+        {showSuggestions &&
+          messages?.length === 0 &&
+          <div className="cl-suggestions_container">
+            {suggested_questions.map((suggestion, index) => (
               <button
                 className="cl-suggestion"
                 onClick={() => suggestionHandle(suggestion.questionId)}
@@ -245,7 +244,8 @@ export default function ChatWindow({
                 {suggestion.text}
               </button>
             ))}
-        </div>
+          </div>
+        }
         <div className="cl-input_container_wrapper">
           <div style={input_container_style} className="cl-input_container">
             <input
@@ -286,7 +286,7 @@ export default function ChatWindow({
           </div>
         </div>
         <div className="cl-powered-by">
-        Powered by <span className="cl-powered-by-lingtual"><a href="https://lingtual.com">lingtual</a></span>
+          Powered by <span className="cl-powered-by-lingtual"><a href="https://lingtual.com">lingtual</a></span>
         </div>
       </div>
     </div>
