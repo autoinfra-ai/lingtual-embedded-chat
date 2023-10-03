@@ -5,7 +5,7 @@ https://www.jsdelivr.com/tools/purge and enter https://cdn.jsdelivr.net/gh/autoi
 
 ## What is Lingtual?
 
-Lingtual is a no-code open-source project that empowers developers to build cutting-edge applications using Language Model technologies. With Lingtual, you can leverage the power of LLMs (Large Language Models) to enhance user interactions, generate human-like text, and gain valuable insights from natural language data.
+Lingtual is a no-code open-source project that is for people to easily build custom tools to use chat as a universal interface. 
 
 ## Features
 
