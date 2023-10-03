@@ -1,5 +1,4 @@
 import { ChatMessageType } from "../../../types/chatWidget";
-import { MoreHorizontal } from "lucide-react";
 
 const dotStyle = {
   width: '6px',
