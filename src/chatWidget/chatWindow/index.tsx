@@ -21,7 +21,7 @@ export default function ChatWindow({
   send_button_style,
   online = true,
   open,
-  online_message = "We'll reply as soon as we can",
+  online_message = "We'll reply as soon as possible",
   offline_message = "We're offline now",
   window_title = "Chat",
   api_key,
