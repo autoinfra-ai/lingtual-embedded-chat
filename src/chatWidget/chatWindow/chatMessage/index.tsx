@@ -1,6 +1,15 @@
 import { ChatMessageType } from "../../../types/chatWidget";
 import { MoreHorizontal } from "lucide-react";
 
+const dotStyle = {
+  width: '6px',
+  height: '6px',
+  borderRadius: '50%',
+  backgroundColor: '#333',
+  margin: '0 2px 10px 3px',
+};
+
+
 export default function ChatMessage({
   message,
   isSend,
@@ -26,8 +35,10 @@ export default function ChatMessage({
       ) : (
         <div style={bot_message_style} className={"cl-bot_message"}>
           {message === "" ? (
-            <div className="cl-animate-pulse">
-              <MoreHorizontal />
+            <div style={{ display: 'flex', alignItems: 'center', height: '20px' }}>
+              <div style={{ ...dotStyle, animation: 'verticalRoll 1s ease-in-out infinite' }}></div>
+              <div style={{ ...dotStyle, animation: 'verticalRoll 1s ease-in-out 0.2s infinite' }}></div>
+              <div style={{ ...dotStyle, animation: 'verticalRoll 1s ease-in-out 0.4s infinite' }}></div>
             </div>
           ) : (
             message
