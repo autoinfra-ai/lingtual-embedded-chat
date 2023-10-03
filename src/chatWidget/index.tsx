@@ -869,6 +869,10 @@ video {
   padding-right: 0.5rem;
 }
 
+.cl-break-words {
+  word-break: break-word;
+}
+
 @-webkit-keyframes pulse {
   50% {
     opacity: .5;
