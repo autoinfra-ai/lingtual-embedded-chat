@@ -28,14 +28,46 @@ Lingtual is a no-code open-source project that empowers developers to build cutt
 <script src="https://cdn.jsdelivr.net/gh/autoinfra-ai/lingtual-embedded-chat@main/dist/build/static/js/bundle.min.js"></script>
 </head>
 <body>
-<lingtual-chat
-    chat_input_field="input"
-    chat_inputs='{"input":""}'
-    host_url="lingtual url"
-    flow_id="your_flow_id"
-  ></lingtual-chat>
+    <lingtual-chat
+      window_title="TITLE"
+      flow_id="YOUR_FLOW_ID"
+      api_key="YOUR_KEY"
+      host_url="http://localhost:7860" 
+      style="position: fixed; bottom: 50px; right: 50px;"
+      chat_input_field="input"
+      chat_inputs='{"input":""}'
+      suggested_questions='[
+      {
+        "questionId": 1,
+        "text": "Suggested questions here..."
+      },
+      {
+        "questionId": 2,
+        "text": "Question 2"
+      },
+      {
+        "questionId": 3,
+        "text": "How to connect with Google Calendar?"
+      }
+    ]'
+      ></lingtual-chat>
 </body>
 </html>
+
+      <!-- suggested_questions='[
+      {
+        "questionId": 1,
+        "text": "Suggested questions here..."
+      },
+      {
+        "questionId": 2,
+        "text": "Question 2"
+      },
+      {
+        "questionId": 3,
+        "text": "How to connect with Google Calendar?"
+      }
+    ]'  -->
 ```
 
 ### on React
@@ -49,10 +81,27 @@ export default function ChatWidget() {
   return (
     <div>
 <lingtual-chat
-    chat_input_field="input"
-    chat_inputs='{"input":""}'
-    host_url="lingtual url"
-    flow_id="your_flow_id"></lingtual-chat>
+      window_title="TITLE"
+      flow_id="YOUR_FLOW_ID"
+      api_key="YOUR_KEY"
+      host_url="http://localhost:7860" 
+      style="position: fixed; bottom: 50px; right: 50px;"
+      chat_input_field="input"
+      chat_inputs='{"input":""}'
+      suggested_questions='[
+      {
+        "questionId": 1,
+        "text": "Suggested questions here..."
+      },
+      {
+        "questionId": 2,
+        "text": "Question 2"
+      },
+      {
+        "questionId": 3,
+        "text": "How to connect with Google Calendar?"
+      }
+    ]'></lingtual-chat>
     </div>
   );
 }
