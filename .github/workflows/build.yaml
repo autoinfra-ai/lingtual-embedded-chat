@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'src/**'  # This ensures the action only runs when there are changes in the 'src/' folder
+permissions:
+  contents: write
 
 jobs:
   build:
