@@ -258,3 +258,13 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 This is a fork of https://github.com/logspace-ai/langflow-embedded-chat credit to them and flowise for building these similar chat components with MIT! 
 
 https://github.com/FlowiseAI/FlowiseChatEmbed
+
+
+## Build and Deployment
+
+To build the project and deploy the generated bundle to your specified directory, you can use the following command:
+
+```
+ npm run build && cp dist/build/static/js/bundle.min.js /Users/tejas/innkeeper/hotel-site/public
+ ```
+

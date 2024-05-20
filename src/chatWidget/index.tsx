@@ -1083,3 +1083,5 @@ input::-ms-input-placeholder { /* Microsoft Edge */
     </>
   );
 }
+
+    export { default as ChatWidget } from './chatWindow';

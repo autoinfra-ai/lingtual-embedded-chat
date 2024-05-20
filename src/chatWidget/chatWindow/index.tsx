@@ -21,7 +21,7 @@ export default function ChatWindow({
   send_button_style,
   online = true,
   open,
-  online_message = "We'll reply as soon as possible",
+  online_message = "Ask us anything",
   offline_message = "We're offline now",
   window_title = "Chat",
   api_key,
@@ -93,7 +93,7 @@ export default function ChatWindow({
       addMessage({ message: value, isSend: true });
       setSendingMessage(true);
       setValue("");
-      sendMessage(
+      const ws = sendMessage(
         hostUrl,
         flowId,
         api_key,
@@ -101,65 +101,82 @@ export default function ChatWindow({
         chat_inputs,
         chat_input_field,
         tweaks
-      )
-        .then((res) => {
-          if (res.data && res.data.result) {
-            const resultKeys = Object.keys(res.data.result);
-            if (chat_output_key && res.data.result[chat_output_key]) {
+      );
+  
+      let accumulatedMessage = "";
+      ws.onmessage = (event) => {
+        // Check if the message is a Blob (binary data)
+        if (event.data instanceof Blob) {
+          // Ignoring binary data as per the requirement
+          console.log("Received binary data, which will not be displayed.");
+        } else {
+          // Handle as plain text
+          const messagePart = event.data;
+          if (messagePart.includes("[end=")) {
+            // Find the end token and cut off everything after it
+            const endIndex = messagePart.indexOf("[end=");
+            if (endIndex !== -1) {
+              accumulatedMessage += messagePart.substring(0, endIndex);
               updateLastMessage({
-                message: res.data.result[chat_output_key],
+                message: accumulatedMessage,
                 isSend: false,
               });
-            } else if (resultKeys.length === 1) {
-              updateLastMessage({
-                message: Object.values(res.data.result)[0],
-                isSend: false,
-              });
-            } else if (resultKeys.includes("output")) {
-              updateLastMessage({
-                message: res.data.result["output"],
-                isSend: false,
-              });
-            } else {
-              updateLastMessage({
-                message: `Multiple output keys were detected in the response: ${resultKeys.join(
-                  ", "
-                )}. Please, define the output key to specify the intended response.`,
-                isSend: false,
-                error: true,
-              });
+              setSendingMessage(false);
+              setValue(""); // Reset input field
+              accumulatedMessage = ""; // Clear accumulated message for next message
             }
-          }
-
-          setSendingMessage(false);
-        })
-
-        .catch((err) => {
-          const response = err.response;
-          if (err.code === "ERR_NETWORK") {
+          } else {
+            accumulatedMessage += messagePart;
             updateLastMessage({
-              message: "Network error",
+              message: accumulatedMessage,
               isSend: false,
-              error: true,
-            });
-          } else if (
-            response &&
-            response.status === 500 &&
-            response.data &&
-            response.data.detail
-          ) {
-            updateLastMessage({
-              message: response.data.detail,
-              isSend: false,
-              error: true,
             });
           }
-          console.error(err);
-          setSendingMessage(false);
+        }
+      };
+  
+      ws.onerror = (event) => {
+        const errorEvent = event as ErrorEvent;
+        updateLastMessage({
+          message: "An error occurred",
+          isSend: false,
+          error: true,
         });
+        console.error(errorEvent);
+        setSendingMessage(false);
+      };
+  
+      ws.onclose = () => {
+        setSendingMessage(false);
+        if (accumulatedMessage.length > 0) {
+          updateLastMessage({
+            message: accumulatedMessage,
+            isSend: false,
+          });
+          accumulatedMessage = ""; // Clear accumulated message
+        }
+      };
+  
       addMessage({ message: "", isSend: false });
     }
   }
+  useEffect(() => {
+    if (lastMessage.current)
+      lastMessage.current.scrollIntoView({ behavior: "smooth" });
+    inputRef.current?.focus();
+  }, [messages]);
+
+  useEffect(() => {
+    if (open && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (!sendingMessage) {
+      setValue("");
+    }
+  }, [sendingMessage]);
 
   function suggestionHandle(QuestionId: number) {
     setValue(suggested_questions[QuestionId - 1].text);
