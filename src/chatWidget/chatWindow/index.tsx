@@ -33,7 +33,7 @@ export default function ChatWindow({
   position,
   triggerRef,
   width = 450,
-  height = 650,
+  height = '80vh',
   tweaks,
   suggested_questions,
 }: {
@@ -65,25 +65,13 @@ export default function ChatWindow({
   position?: string;
   triggerRef: React.RefObject<HTMLButtonElement>;
   width?: number;
-  height?: number;
+  height?: number | string;
   suggested_questions: suggestion[];
 }) {
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const lastMessage = useRef<HTMLDivElement>(null);
-  const [windowPosition, setWindowPosition] = useState({ left: "0", top: "0" });
-  useEffect(() => {
-    if (triggerRef)
-      setWindowPosition(
-        getChatPosition(
-          triggerRef.current!.getBoundingClientRect(),
-          width,
-          height,
-          position
-        )
-      );
-  }, [triggerRef, width, height, position]);
   const [sendingMessage, setSendingMessage] = useState(false);
   const [suggestionClicked, setSuggestionClicked] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
@@ -210,10 +198,9 @@ export default function ChatWindow({
         getAnimationOrigin(position) +
         (open ? " cl-scale-100" : " cl-scale-0")
       }
-      style={{ ...windowPosition, zIndex: 9999 }}
     >
       <div
-        style={{ ...chat_window_style, width: width, height: height }}
+        style={{ ...chat_window_style, height: height}}
         ref={ref}
         className="cl-window"
       >
