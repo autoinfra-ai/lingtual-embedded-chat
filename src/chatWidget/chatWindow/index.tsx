@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ChatMessageType, suggestion } from "../../types/chatWidget";
 import ChatMessage from "./chatMessage";
 import { sendMessage } from "../../controllers";
+import { isMobile } from 'react-device-detect';
 
 export default function ChatWindow({
   flowId,
@@ -33,7 +34,7 @@ export default function ChatWindow({
   position,
   triggerRef,
   width = 450,
-  height = '80vh',
+  height = 650,
   tweaks,
   suggested_questions,
 }: {
@@ -65,17 +66,35 @@ export default function ChatWindow({
   position?: string;
   triggerRef: React.RefObject<HTMLButtonElement>;
   width?: number;
-  height?: number | string;
+  height?: number;
   suggested_questions: suggestion[];
 }) {
   const [value, setValue] = useState<string>("");
   const ref = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const lastMessage = useRef<HTMLDivElement>(null);
+  const [windowPosition, setWindowPosition] = useState({ left: "0", top: "0" });
+  useEffect(() => {
+    if (triggerRef)
+      setWindowPosition(
+        getChatPosition(
+          triggerRef.current!.getBoundingClientRect(),
+          width,
+          height,
+          position
+        )
+      );
+  }, [triggerRef, width, height, position]);
   const [sendingMessage, setSendingMessage] = useState(false);
   const [suggestionClicked, setSuggestionClicked] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
-
+  let MobileResponsiveStyles = { height: isMobile ? '80vh' : height, width: isMobile ? 'inital' : width };
+  let MobileChat_window_style = isMobile?{
+    left: 0,
+    bottom: 0,
+    top: 0,
+    right: 0
+  }:{};
   function handleClick() {
     if (value && value.trim() !== "") {
       addMessage({ message: value, isSend: true });
@@ -198,9 +217,10 @@ export default function ChatWindow({
         getAnimationOrigin(position) +
         (open ? " cl-scale-100" : " cl-scale-0")
       }
+      style={{ ...windowPosition, zIndex: 9999, ...MobileChat_window_style, ...(isMobile && { position: 'fixed' })}}
     >
       <div
-        style={{ ...chat_window_style, height: height}}
+        style={{ ...chat_window_style,...MobileResponsiveStyles}}
         ref={ref}
         className="cl-window"
       >
