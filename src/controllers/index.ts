@@ -25,7 +25,9 @@ export function sendMessage(baseUrl: string, flowId: string, api_key: string, me
         data = { inputs: inputs };
     }
 
-const ws = new WebSocket(`wss://${baseUrl}/ws/${api_key}?character_id=${flowId}&platform=hotel_website&disable_tts=true`);
+const protocol = baseUrl.includes('localhost') ? 'ws' : 'wss';
+const ws = new WebSocket(`${protocol}://${baseUrl}/ws/${api_key}?character_id=${flowId}&platform=hotel_website&disable_tts=true`);
+console.log('WebSocket connection created, URL: ', `${protocol}://${baseUrl}/ws/${api_key}?character_id=${flowId}&platform=hotel_website&disable_tts=true`);
 ws.onopen = () => {
         // Send only the message text instead of the entire data object
         ws.send(message);

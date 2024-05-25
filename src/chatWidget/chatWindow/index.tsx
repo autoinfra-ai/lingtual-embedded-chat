@@ -202,6 +202,7 @@ export default function ChatWindow({
     }
   }, [open]);
 
+  
   return (
     <div
       className={
