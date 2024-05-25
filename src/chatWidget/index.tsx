@@ -819,7 +819,8 @@ video {
 }
 
 .cl-suggestion {
-  height: 2.5rem;
+  height: auto;
+  text-align: left;
   padding: 0.5rem 1rem;
   border-radius: 2.5rem;
   border: 1px solid rgb(229 231 235);
