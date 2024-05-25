@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body style="width: 100vh; height: 100vh; ">
+    <style>
+      @media (max-width: 768px) {
+        lingtual-chat {
+          left: 0 !important;
+          bottom: 0 !important;
+          height: 100vh;
+          width: 100%;
+
+          display: flex;
+          flex-direction: column-reverse;
+        }
+      }
+    </style>
+  </head>
+  <body style="width: 100vw; height: 100vh">
     <!-- chat_inputs: Stringified JSON with all the input keys and its values. The value of the key that is defined
     as chat_input_field will be overwritten by the chat message.
     chat_input_field: Input key that you want the chat to send the user message with. -->
@@ -13,16 +26,16 @@
       window_title="Radiant Ramanujan"
       flow_id="20ce3a20-212b-4d41-bf7f-42e0407eae97"
       api_key="8fbb81f8dd641ab6c412b0feb86286d7"
-      host_url="http://localhost:7860" 
-      style="position: fixed; bottom: 50px; right: 50px;"
+      host_url="http://localhost:7860"
+      style="position: fixed; bottom: 50px; right: 50px"
       chat_input_field="input"
       chat_inputs='{"input":""}'
-      suggested_questions='[]'
-      ></lingtual-chat>
-</body>
+      suggested_questions="[]"
+    ></lingtual-chat>
+  </body>
 </html>
 
-      <!-- suggested_questions='[
+<!-- suggested_questions='[
       {
         "questionId": 1,
         "text": "Suggested questions here..."

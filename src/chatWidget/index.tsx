@@ -3,9 +3,9 @@ import ChatTrigger from "./chatTrigger";
 import ChatWindow from "./chatWindow";
 import { ChatMessageType } from "../types/chatWidget";
 type suggestion = {
-  questionId: number,
-  text: string,
-}
+  questionId: number;
+  text: string;
+};
 export default function ChatWidget({
   chat_input_field,
   chat_inputs,
@@ -95,6 +95,7 @@ export default function ChatWidget({
   /* 2 */
   border-color: #e5e7eb;
   /* 2 */
+  
 }
 
 ::before,
@@ -648,6 +649,14 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.cl-trigger_wrapper{
+  @media screen and (max-width: 768px){
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+  }
+}
+
 .cl-trigger {
   display: flex;
   height: 3rem;
@@ -663,6 +672,10 @@ video {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+
+  @media screen and (max-width: 768px){
+    flex: 0.2;
+  }
 }
 
 .cl-trigger:hover {
@@ -678,6 +691,11 @@ video {
   --tw-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   --tw-shadow-colored: 0 0 10px var(--tw-shadow-color);
   box-shadow: 0px 4px 16px 0px #0000001F;
+
+  @media screen and (max-width: 768px){
+    height: 100% !important; 
+    width: 100% !important; 
+  }
 }
 
 .cl-scale-100 {
@@ -701,6 +719,11 @@ video {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 500ms;
+
+  @media screen and (max-width: 768px){
+    height: auto;
+    width: auto;
+  }
 }
 
 .cl-chat-window {
@@ -711,6 +734,10 @@ video {
   transition-property: all;
   transition-duration: 300ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+  @media screen and (max-width: 768px){
+    position: static;
+    flex: 2;
 }
 
 .cl-online-message {
@@ -1084,4 +1111,4 @@ input::-ms-input-placeholder { /* Microsoft Edge */
   );
 }
 
-    export { default as ChatWidget } from './chatWindow';
+export { default as ChatWidget } from "./chatWindow";

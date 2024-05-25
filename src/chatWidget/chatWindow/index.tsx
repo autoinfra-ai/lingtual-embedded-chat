@@ -102,7 +102,7 @@ export default function ChatWindow({
         chat_input_field,
         tweaks
       );
-  
+
       let accumulatedMessage = "";
       ws.onmessage = (event) => {
         // Check if the message is a Blob (binary data)
@@ -134,7 +134,7 @@ export default function ChatWindow({
           }
         }
       };
-  
+
       ws.onerror = (event) => {
         const errorEvent = event as ErrorEvent;
         updateLastMessage({
@@ -145,7 +145,7 @@ export default function ChatWindow({
         console.error(errorEvent);
         setSendingMessage(false);
       };
-  
+
       ws.onclose = () => {
         setSendingMessage(false);
         if (accumulatedMessage.length > 0) {
@@ -156,7 +156,7 @@ export default function ChatWindow({
           accumulatedMessage = ""; // Clear accumulated message
         }
       };
-  
+
       addMessage({ message: "", isSend: false });
     }
   }
@@ -202,7 +202,6 @@ export default function ChatWindow({
     }
   }, [open]);
 
-  
   return (
     <div
       className={
@@ -250,8 +249,7 @@ export default function ChatWindow({
           ))}
           <div ref={lastMessage}></div>
         </div>
-        {showSuggestions &&
-          messages?.length === 0 &&
+        {showSuggestions && messages?.length === 0 && (
           <div className="cl-suggestions_container">
             {suggested_questions.map((suggestion, index) => (
               <button
@@ -263,7 +261,7 @@ export default function ChatWindow({
               </button>
             ))}
           </div>
-        }
+        )}
         <div className="cl-input_container_wrapper">
           <div style={input_container_style} className="cl-input_container">
             <input
@@ -304,7 +302,10 @@ export default function ChatWindow({
           </div>
         </div>
         <div className="cl-powered-by">
-          Powered by <span className="cl-powered-by-lingtual"><a href="https://innkeeper.ai">innkeeper.ai</a></span>
+          Powered by{" "}
+          <span className="cl-powered-by-lingtual">
+            <a href="https://innkeeper.ai">innkeeper.ai</a>
+          </span>
         </div>
       </div>
     </div>
