@@ -76,6 +76,7 @@ export default function ChatWindow({
   const [windowPosition, setWindowPosition] = useState({ left: "0", top: "0" });
   useEffect(() => {
     if (triggerRef)
+      setMobileResponsiveStyles({ height: isMobile ? `${triggerRef.current!.getBoundingClientRect().top - 5}px` : height, width: isMobile ? 'inital' : width });
       setWindowPosition(
         getChatPosition(
           triggerRef.current!.getBoundingClientRect(),
@@ -88,7 +89,7 @@ export default function ChatWindow({
   const [sendingMessage, setSendingMessage] = useState(false);
   const [suggestionClicked, setSuggestionClicked] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
-  let MobileResponsiveStyles = { height: isMobile ? '80vh' : height, width: isMobile ? 'inital' : width };
+  const [MobileResponsiveStyles,setMobileResponsiveStyles] = useState({ height: isMobile ? '80vh' : height, width: isMobile ? 'inital' : width });
   let MobileChat_window_style = isMobile?{
     left: 0,
     bottom: 0,
