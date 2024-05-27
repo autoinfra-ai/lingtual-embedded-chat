@@ -663,6 +663,8 @@ video {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+  position:sticky;
+  z-index:99999;
 }
 
 .cl-trigger:hover {
@@ -817,7 +819,8 @@ video {
 }
 
 .cl-suggestion {
-  height: 2.5rem;
+  height: auto;
+  text-align: left;
   padding: 0.5rem 1rem;
   border-radius: 2.5rem;
   border: 1px solid rgb(229 231 235);

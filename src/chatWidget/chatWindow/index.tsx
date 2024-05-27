@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ChatMessageType, suggestion } from "../../types/chatWidget";
 import ChatMessage from "./chatMessage";
 import { sendMessage } from "../../controllers";
+import { isMobile } from 'react-device-detect';
 
 export default function ChatWindow({
   flowId,
@@ -75,6 +76,7 @@ export default function ChatWindow({
   const [windowPosition, setWindowPosition] = useState({ left: "0", top: "0" });
   useEffect(() => {
     if (triggerRef)
+      setMobileResponsiveStyles({ height: isMobile ? `${triggerRef.current!.getBoundingClientRect().top - 5}px` : height, width: isMobile ? 'inital' : width });
       setWindowPosition(
         getChatPosition(
           triggerRef.current!.getBoundingClientRect(),
@@ -87,7 +89,13 @@ export default function ChatWindow({
   const [sendingMessage, setSendingMessage] = useState(false);
   const [suggestionClicked, setSuggestionClicked] = useState(false);
   const [showSuggestions, setShowSuggestions] = useState(true);
-
+  const [MobileResponsiveStyles,setMobileResponsiveStyles] = useState({ height: isMobile ? '80vh' : height, width: isMobile ? 'inital' : width });
+  let MobileChat_window_style = isMobile?{
+    left: 0,
+    bottom: 0,
+    top: 0,
+    right: 0
+  }:{};
   function handleClick() {
     if (value && value.trim() !== "") {
       addMessage({ message: value, isSend: true });
@@ -210,10 +218,10 @@ export default function ChatWindow({
         getAnimationOrigin(position) +
         (open ? " cl-scale-100" : " cl-scale-0")
       }
-      style={{ ...windowPosition, zIndex: 9999 }}
+      style={{ ...windowPosition, zIndex: 9999, ...MobileChat_window_style, ...(isMobile && { position: 'fixed' })}}
     >
       <div
-        style={{ ...chat_window_style, width: width, height: height }}
+        style={{ ...chat_window_style,...MobileResponsiveStyles}}
         ref={ref}
         className="cl-window"
       >
