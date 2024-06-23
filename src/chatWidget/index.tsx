@@ -650,8 +650,8 @@ video {
 
 .cl-trigger {
   display: flex;
-  height: 3rem;
-  width: 3rem;
+  height: 4.5rem;
+  width: 4.5rem;
   align-items: center;
   justify-content: center;
   border-radius: 9999px;

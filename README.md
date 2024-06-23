@@ -1,4 +1,7 @@
 
+```
+npm run build && cp dist/build/static/js/bundle.min.js /Users/tejas/innkeeper/hotel-site/public
+```
 
 to purge jsdelivr cache: click this
 https://www.jsdelivr.com/tools/purge and enter https://cdn.jsdelivr.net/gh/autoinfra-ai/lingtual-embedded-chat@latest/dist/build/static/js/bundle.min.js
@@ -33,7 +36,6 @@ Lingtual is a no-code open-source project that is for people to easily build cus
       flow_id="YOUR_FLOW_ID"
       api_key="YOUR_KEY"
       host_url="http://localhost:7860" 
-      style="position: fixed; bottom: 50px; right: 50px;"
       chat_input_field="input"
       chat_inputs='{"input":""}'
       suggested_questions='[
