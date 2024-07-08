@@ -113,15 +113,25 @@ export default function ChatWindow({
   
       let accumulatedMessage = "";
       ws.onmessage = (event) => {
-        // Check if the message is a Blob (binary data)
         if (event.data instanceof Blob) {
-          // Ignoring binary data as per the requirement
           console.log("Received binary data, which will not be displayed.");
         } else {
-          // Handle as plain text
           const messagePart = event.data;
-          if (messagePart.includes("[end=")) {
-            // Find the end token and cut off everything after it
+          
+          // Check if this is an admin message
+          if (messagePart.startsWith("[admin_message]") && messagePart.endsWith("[/admin_message]")) {
+            const adminMessage = messagePart.slice(15, -16); // Remove the tags
+            addMessage({ // adds admin message to the chat from send_admin_message fastapi endpoint
+              message: adminMessage,
+              isSend: false,
+              isAdmin: true,
+              bot_message_style: {
+                ...bot_message_style,
+                backgroundColor: '#f0f0f0',
+                fontStyle: 'italic',
+              },
+            });
+          } else if (messagePart.includes("[end=")) {
             const endIndex = messagePart.indexOf("[end=");
             if (endIndex !== -1) {
               accumulatedMessage += messagePart.substring(0, endIndex);
@@ -130,8 +140,8 @@ export default function ChatWindow({
                 isSend: false,
               });
               setSendingMessage(false);
-              setValue(""); // Reset input field
-              accumulatedMessage = ""; // Clear accumulated message for next message
+              setValue("");
+              accumulatedMessage = "";
             }
           } else {
             accumulatedMessage += messagePart;
@@ -171,7 +181,6 @@ export default function ChatWindow({
   useEffect(() => {
     if (lastMessage.current)
       lastMessage.current.scrollIntoView({ behavior: "smooth" });
-    inputRef.current?.focus();
   }, [messages]);
 
   useEffect(() => {
@@ -199,16 +208,14 @@ export default function ChatWindow({
   }, [suggestionClicked]);
 
   useEffect(() => {
-    if (lastMessage.current)
+    if (lastMessage.current) {
       lastMessage.current.scrollIntoView({ behavior: "smooth" });
-    inputRef.current?.focus();
-  }, [messages]);
-
-  useEffect(() => {
+    }
+    // Only focus the input when the chat window is open
     if (open && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [open]);
+  }, [messages, open]);
 
   
   return (
@@ -284,7 +291,7 @@ export default function ChatWindow({
                 if (e.key === "Enter") handleClick();
               }}
               type="text"
-              disabled={sendingMessage}
+              disabled={sendingMessage || !open} // Disable input when chat is closed
               placeholder={
                 sendingMessage
                   ? placeholder_sending || "Thinking..."
